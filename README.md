@@ -109,9 +109,12 @@ Toutes les erreurs suivent le même format :
 
 ## Lancer le projet
 
+Aucun secret n'est versionné : les mots de passe et le secret JWT sont lus depuis des variables d'environnement, définies localement dans un fichier `.env` ignoré par Git à partir de `.env.example`.
+
 ### Avec Docker
 
 ```bash
+cp .env.example .env
 docker compose up --build
 ```
 
@@ -137,7 +140,7 @@ Le seed crée un administrateur à partir de `SEED_ADMIN_EMAIL` et `SEED_ADMIN_P
 ```bash
 curl -X POST http://localhost:3000/api/auth/login \
   -H "Content-Type: application/json" \
-  -d '{"email":"admin@example.com","password":"ChangeMe123!"}'
+  -d '{"email":"admin@example.com","password":"<SEED_ADMIN_PASSWORD>"}'
 
 curl "http://localhost:3000/api/rooms?minCapacity=8&availableFrom=2030-05-12T09:00:00Z&availableTo=2030-05-12T10:00:00Z" \
   -H "Authorization: Bearer <accessToken>"
@@ -171,7 +174,7 @@ docker compose up -d database
 npm test
 ```
 
-La base utilisée peut être modifiée avec la variable `TEST_DATABASE_URL`.
+La base de test est définie par la variable `TEST_DATABASE_URL`, lue depuis l'environnement ou le fichier `.env`. Le secret JWT des tests est généré aléatoirement à chaque exécution.
 
 ## Configuration
 

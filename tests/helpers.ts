@@ -6,7 +6,7 @@ import { signAccessToken } from "../src/modules/auth/token.js";
 
 export const app = createApp();
 
-export const DEFAULT_PASSWORD = "Sup3r-Secret!";
+export const DEFAULT_PASSWORD = "password-used-in-tests";
 
 const HOUR_IN_MILLISECONDS = 60 * 60 * 1000;
 

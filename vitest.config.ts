@@ -1,3 +1,4 @@
+import { randomBytes } from "node:crypto";
 import { defineConfig } from "vitest/config";
 import { testDatabaseUrl } from "./tests/test-database.js";
 
@@ -8,7 +9,7 @@ export default defineConfig({
     env: {
       NODE_ENV: "test",
       DATABASE_URL: testDatabaseUrl,
-      JWT_SECRET: "integration-tests-secret-that-is-long-enough",
+      JWT_SECRET: randomBytes(32).toString("hex"),
       PASSWORD_HASH_ROUNDS: "4",
       LOG_LEVEL: "silent",
     },

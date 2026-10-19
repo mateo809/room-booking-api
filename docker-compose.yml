@@ -4,7 +4,7 @@ services:
     environment:
       POSTGRES_DB: room_booking
       POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the .env file}
     ports:
       - "5432:5432"
     volumes:
@@ -21,7 +21,7 @@ services:
       target: build
     command: ["npx", "prisma", "migrate", "deploy"]
     environment:
-      DATABASE_URL: postgresql://postgres:postgres@database:5432/room_booking
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the .env file}@database:5432/room_booking
     depends_on:
       database:
         condition: service_healthy
@@ -33,8 +33,8 @@ services:
         condition: service_completed_successfully
     environment:
       PORT: 3000
-      DATABASE_URL: postgresql://postgres:postgres@database:5432/room_booking
-      JWT_SECRET: ${JWT_SECRET:-local-docker-secret-change-me-in-production}
+      DATABASE_URL: postgresql://postgres:${POSTGRES_PASSWORD:?Set POSTGRES_PASSWORD in the .env file}@database:5432/room_booking
+      JWT_SECRET: ${JWT_SECRET:?Set JWT_SECRET in the .env file}
     ports:
       - "3000:3000"
 
